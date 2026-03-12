@@ -48,16 +48,14 @@ def validate_request(request: dict) -> dict:
         speed = parameters.get("speed")
         is_rotation = str(direction).startswith("rotate")
         
-        # 1. 动态设置默认速度
         if speed is None:
             # 线速度默认 0.15 m/s，角速度默认 30.0 deg/s (LeKiwi接收的是角度制)
             speed = 30.0 if is_rotation else 0.15
             
         speed = _require_number(speed, "speed")
         
-        # 2. 分离安全上限校验
         if is_rotation:
-            max_angular_speed = 60.0  # 建议最大旋转速度 60 deg/s (根据你的底盘实际情况微调)
+            max_angular_speed = 60.0  # 最大旋转速度 60 deg/s (根据你的底盘实际情况微调)
             if not (0.01 <= speed <= max_angular_speed):
                 raise ValueError(f"rotation speed must be between 0.01 and {max_angular_speed} deg/s")
         else:
@@ -76,10 +74,10 @@ def validate_request(request: dict) -> dict:
         normalized["parameters"] = {"head_motor_1": hm1, "head_motor_2": hm2}
 
     elif action_type == "reset_arm":
-        side = parameters.get("side")
-        if side not in {"left", "right"}:
-            raise ValueError("side must be 'left' or 'right'")
-        normalized["parameters"] = {"side": side}
+        #side = parameters.get("side")
+        #if side not in {"left", "right"}:
+        #    raise ValueError("side must be 'left' or 'right'")
+        normalized["parameters"] = {}
 
     else:
         normalized["parameters"] = {}

@@ -1,5 +1,6 @@
 import time
 import logging
+import threading
 
 class BaseController:
     def __init__(self, adapter, control_hz: int = 10):

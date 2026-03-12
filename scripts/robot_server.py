@@ -1,8 +1,6 @@
+from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 import json
 import sys
-from pathlib import Path
-from http.server import BaseHTTPRequestHandler, HTTPServer
-from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 import threading
 import uuid
 import time

@@ -41,29 +41,23 @@ class RobotOrchestrator:
 
     def stop_base(self) -> dict:
         result = self.base.stop()
-        self.refresh_state()
-        return result
+        return self._with_state(result) 
 
     def set_head(self, head_motor_1: float, head_motor_2: float) -> dict:
         result = self.head.set_head(head_motor_1=head_motor_1, head_motor_2=head_motor_2)
-        self.refresh_state()
-        return result
+        return self._with_state(result)
 
     def reset_head(self) -> dict:
         result = self.head.reset()
-        self.refresh_state()
-        return result
+        return self._with_state(result)
 
-    def reset_arm(self, side: str) -> dict:
-        result = self.arm.reset_arm(side)
-        self.refresh_state()
-        return result
-
-    def get_robot_state(self) -> dict:
-        self.refresh_state()
-        return self.state.snapshot()
+    def reset_arm(self) -> dict:
+        result = self.arm.reset_arm() 
+        return self._with_state(result)
 
     def stop_all(self) -> dict:
         self.adapter.stop_all()
-        self.refresh_state()
-        return {"executed": "stop_all", "state": self.state.snapshot()}
+        return self._with_state({"executed": "stop_all"})
+
+    def get_robot_state(self) -> dict:
+        return self._with_state({"executed": "get_robot_state"})
