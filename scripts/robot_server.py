@@ -63,8 +63,18 @@ class Handler(BaseHTTPRequestHandler):
 def main():
     server = HTTPServer(("127.0.0.1", 8765), Handler)
     print("XLerobot robot_server listening on http://127.0.0.1:8765/action")
-    server.serve_forever()
-
+    
+    try:
+        server.serve_forever()
+    except KeyboardInterrupt:
+        print("\nShutting down server...")
+    finally:
+        server.server_close()
+        # 核心优化：确保退出时硬件断开连接，释放端口，卸载电机扭矩
+        print("Releasing robot hardware...")
+        ORCH.stop_all()
+        ORCH.adapter.disconnect()
+        print("Shutdown complete.")
 
 if __name__ == "__main__":
     main()
