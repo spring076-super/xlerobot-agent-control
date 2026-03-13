@@ -1,0 +1,4 @@
+interface:
+  display_name: XLerobot Agent Control
+  short_description: Unified base, arm, and head control for XLerobot via one local server.
+  category: robotics
